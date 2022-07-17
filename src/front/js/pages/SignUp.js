@@ -1,12 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   return (
-    <div className="container flex-column d-flex h-100 align-items-center justify-content-center">
+    <div
+      style={{ height: "100vh" }}
+      className="container flex-column d-flex align-items-center justify-content-center"
+    >
       <div className="row">
         <form>
           <input
@@ -15,7 +20,7 @@ export const SignUp = (props) => {
             className="form-control my-1"
             value={email}
             placeholder="email"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
@@ -31,12 +36,17 @@ export const SignUp = (props) => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={(e) =>
-            actions.SignUp({
+          onClick={async (e) => {
+            const success = await actions.signUp({
               email: email,
               password: password,
-            })
-          }
+            });
+            if (success) {
+              navigate("/login");
+              return;
+            }
+            alert("something happened while creating");
+          }}
         >
           {"Sign up"}
         </button>
