@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-export const SignUp = (props) => {
+export const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { store, actions } = useContext(Context);
@@ -35,20 +35,20 @@ export const SignUp = (props) => {
       <div className="row">
         <button
           type="button"
-          className="btn btn-success"
+          className="btn btn-primary"
           onClick={async (e) => {
-            const success = await actions.signUp({
+            const success = await actions.login({
               email: email,
               password: password,
             });
             if (success) {
-              navigate("/login");
+              navigate("/private");
               return;
             }
             alert("something happened while creating");
           }}
         >
-          {"Sign up"}
+          {"Login"}
         </button>
       </div>
     </div>
